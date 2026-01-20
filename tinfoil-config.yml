@@ -10,7 +10,7 @@
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
 shim-version: v0.3.9@sha256:a45eb01f8e5fa3162b804821d53d8e8667a75940a9c1995f29265347efca8009
-cvm-version: 0.5.16
+cvm-version: 0.5.18
 
 # Resource allocation
 cpus: 2
