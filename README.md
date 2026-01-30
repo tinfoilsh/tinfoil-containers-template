@@ -4,7 +4,7 @@ This repository contains the configuration for your Tinfoil Function deployment.
 
 ## Quick Start
 
-1. Go to [tinfoil.sh/dashboard](https://tinfoil.sh/dashboard)
+1. Go to [dash.tinfoil.sh](https://dash.tinfoil.sh)
 2. Click **Create Function**
 3. Select **Simple Deploy**
 4. Provide:
