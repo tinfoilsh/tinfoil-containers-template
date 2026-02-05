@@ -9,26 +9,21 @@
 #
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
-shim-version: v0.3.9@sha256:a45eb01f8e5fa3162b804821d53d8e8667a75940a9c1995f29265347efca8009
-cvm-version: 0.5.18
-
-# Resource allocation
+shim-version: v0.3.12@sha256:b81f2295ae6750d61e94f810ce24077360001b6ec795d13643f3170df29e304d
+cvm-version: 0.6.6
 cpus: 2
 memory: 8192
 
-# Container configuration (will be populated by dashboard)
+# Container configuration
 # Note: image must include SHA256 hash (e.g., image:tag@sha256:abc123...)
 containers:
   - name: "app"
-    image: ""
-    args:
-      - "-e"
-      - "LOG_LEVEL=info"
-      - "-e"
-      - "API_KEY=${API_KEY}"
-      - "your-image:tag@sha256:..."
-      - "--port"
-      - "8000"
+    image: "your-image:tag@sha256:..."
+    env:
+      - LOG_LEVEL: "info"
+    secrets:
+      - API_KEY
+    command: ["--port", "8000"]
 
 # Shim configuration (adjust upstream-port and paths to match your container)
 shim:

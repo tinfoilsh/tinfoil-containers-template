@@ -9,8 +9,7 @@ This repository contains the configuration for your Tinfoil Function deployment.
 3. Select **Simple Deploy**
 4. Provide:
    - This repository URL
-   - Your container image with SHA hash (e.g., `vllm/vllm-openai:v0.13.0@sha256:abc123...`)
-   - Container arguments
+   - Your container image with SHA hash (e.g., `vllm/vllm-openai:v0.14.1@sha256:abc123...`)
    - Environment variables and secrets
    - Resource requirements (CPUs, memory, GPUs)
 5. Click **Deploy**
@@ -26,7 +25,7 @@ After the initial deployment, update your function by editing the config directl
 
 # 2. Commit your changes
 git add tinfoil-config.yml
-git commit -m "Update to vllm v0.14.0"
+git commit -m "Update to vllm v0.14.1"
 
 # 3. Push a new tag to trigger deployment
 git tag v2
@@ -39,16 +38,21 @@ Your new deployment will be built from the tagged commit. Each tag creates an au
 
 **Update container image:**
 ```yaml
-args:
-  - "vllm/vllm-openai:v0.14.0@sha256:d623253f2ba246378421c9642e20885e65257f38418ff26d48c81aea1702521b"
+containers:
+  - name: "app"
+    image: "vllm/vllm-openai:v0.14.1@sha256:6fc52be4609fc19b09c163be2556976447cc844b8d0d817f19bc9e1f44b48d5a"
 ```
 To get the SHA hash for an image: `docker pull <image> && docker inspect --format='{{index .RepoDigests 0}}' <image>`
 
 **Add environment variable:**
 ```yaml
-args:
-  - "-e"
-  - "NEW_VAR=value"
+containers:
+  - name: "app"
+    env:
+      - LOG_LEVEL: "info"      # Hardcoded value
+      - MAX_WORKERS: "4"
+    secrets:
+      - API_KEY               # Looked up from external-config
 ```
 
 **Expose new path:**
@@ -67,25 +71,21 @@ If you prefer to configure manually, edit `tinfoil-config.yml` directly. See the
 ### Example: vLLM Inference Server
 
 ```yaml
-shim-version: v0.3.5@sha256:f44c65a1f7db476be20c3431bb6facea8c2966606a07fbb5724a619f82bfa558
-cvm-version: 0.5.16
+shim-version: v0.3.12@sha256:b81f2295ae6750d61e94f810ce24077360001b6ec795d13643f3170df29e304d
+cvm-version: 0.6.6
 cpus: 16
 memory: 65536
-gpus: full
 
 containers:
   - name: "inference"
-    image: ""
-    args:
-      - "--runtime"
-      - "nvidia"
-      - "--gpus"
-      - "all"
-      - "vllm/vllm-openai:v0.13.0@sha256:d623253f2ba246378421c9642e20885e65257f38418ff26d48c81aea1702521b"
-      - "--model"
-      - "/models/my-model"
-      - "--port"
-      - "8001"
+    image: "vllm/vllm-openai:v0.14.1@sha256:6fc52be4609fc19b09c163be2556976447cc844b8d0d817f19bc9e1f44b48d5a"
+    runtime: nvidia
+    gpus: all
+    ipc: host
+    command: [
+      "--model", "/models/my-model",
+      "--port", "8001"
+    ]
 
 shim:
   listen-port: 443
@@ -104,10 +104,9 @@ shim:
 | Field | Description | Valid Values |
 |-------|-------------|--------------|
 | `shim-version` | Version of the Tinfoil shim | Pinned version with SHA |
-| `cvm-version` | Confidential VM version | Version string (e.g., `0.5.16`) |
+| `cvm-version` | Confidential VM version | Version string (e.g., `0.6.6`) |
 | `cpus` | Number of vCPUs | 2, 4, 8, 16, 32 |
 | `memory` | Memory in MB | 8192, 16384, 32768, 65536, 131072 |
-| `gpus` | GPU allocation | `""` (none), `"full"` |
 
 #### Container Configuration
 
@@ -116,39 +115,24 @@ Each container in the `containers` array supports:
 | Field | Description | Example |
 |-------|-------------|---------|
 | `name` | Container identifier | `"inference"` |
-| `image` | Leave empty (image specified in args) | `""` |
-| `args` | Docker run arguments as array | See below |
+| `image` | Container image with SHA256 digest | `"image:tag@sha256:..."` |
+| `command` | Command arguments | `["--port", "8001"]` |
+| `entrypoint` | Override entrypoint | `["python"]` |
+| `env` | Environment variables | See below |
+| `secrets` | Secret keys from external-config | `["API_KEY"]` |
+| `runtime` | Container runtime | `"nvidia"` |
+| `gpus` | GPU allocation | `"all"`, `"0,1"`, or count |
+| `ipc` | IPC mode (for multi-GPU) | `"host"` |
+| `volumes` | Bind mounts | `["/mnt/ramdisk/data:/data"]` |
 
-Common `args` patterns:
-
+**Environment variables** support two formats:
 ```yaml
-args:
-  # Runtime options
-  - "--runtime"
-  - "nvidia"
-  - "--gpus"
-  - "all"
-  - "--ipc"
-  - "host"
+env:
+  - LOG_LEVEL: "info"    # Hardcoded value
+  - CONFIG_PATH          # Looked up from external-config env section
 
-  # Environment variables
-  - "-e"
-  - "LOG_LEVEL=info"
-  - "-e"
-  - "MAX_WORKERS=4"
-
-  # Secrets (referenced from Tinfoil secrets manager)
-  - "-e"
-  - "API_KEY=${SECRET_API_KEY}"
-  - "-e"
-  - "DATABASE_URL=${SECRET_DB_URL}"
-
-  # Image and command (SHA hash required)
-  - "vllm/vllm-openai:v0.13.0@sha256:d623253f2ba246378421c9642e20885e65257f38418ff26d48c81aea1702521b"
-  - "--model"
-  - "/models/llama"
-  - "--port"
-  - "8001"
+secrets:
+  - API_KEY              # Looked up from external-config secrets section
 ```
 
 #### Shim Configuration
