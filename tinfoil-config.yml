@@ -9,7 +9,7 @@
 #
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
-shim-version: v0.3.12@sha256:b81f2295ae6750d61e94f810ce24077360001b6ec795d13643f3170df29e304d
+shim-version: v0.3.14@sha256:154c3e15f4d4856fd4b72e83f84da751abd34c76732bb6548bc89d5fa56c24ac
 cvm-version: 0.6.6
 cpus: 2
 memory: 8192
