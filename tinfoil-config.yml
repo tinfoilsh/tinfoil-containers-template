@@ -10,7 +10,7 @@
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
 shim-version: v0.3.16@sha256:20220be4487f241e7e2a9af6dd576d20ba35d71307bd777c8dba9ba5da03fb38
-cvm-version: 0.6.6
+cvm-version: 0.6.7
 cpus: 2
 memory: 8192
 
