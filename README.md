@@ -1,11 +1,11 @@
-# Tinfoil Function Configuration
+# Tinfoil Container Configuration
 
-This repository contains the configuration for your Tinfoil Function deployment.
+This repository contains the configuration for your Tinfoil Container deployment.
 
 ## Quick Start
 
 1. Go to [dash.tinfoil.sh](https://dash.tinfoil.sh)
-2. Click **Create Function**
+2. Click **Create Container**
 3. Select **Simple Deploy**
 4. Provide:
    - This repository URL
@@ -16,9 +16,9 @@ This repository contains the configuration for your Tinfoil Function deployment.
 
 The `tinfoil-config.yml` file will be automatically updated with your settings and an initial deployment will be triggered.
 
-## Updating Your Function
+## Updating Your Container
 
-After the initial deployment, update your function by editing the config directly and pushing a new tag:
+After the initial deployment, update your container by editing the config directly and pushing a new tag:
 
 ```bash
 # 1. Edit tinfoil-config.yml (update image version, env vars, etc.)
@@ -66,7 +66,7 @@ shim:
 
 ## Manual Configuration
 
-If you prefer to configure manually, edit `tinfoil-config.yml` directly. See the [configuration reference](https://docs.tinfoil.sh/functions/config) for all available options.
+If you prefer to configure manually, edit `tinfoil-config.yml` directly. See the [configuration reference](https://docs.tinfoil.sh/containers/config) for all available options.
 
 ### Example: vLLM Inference Server
 
