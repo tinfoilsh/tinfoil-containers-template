@@ -15,7 +15,7 @@ This is a GitHub template repository for deploying [Tinfoil Containers](https://
    ```
 4. Go to the [Tinfoil Dashboard](https://dash.tinfoil.sh), navigate to **Containers** → **Deploy**, select your repo and tag, and click **Deploy**
 
-Your container will be live at `https://<container-name>.<org>.containers.tinfoil.sh` once the deployment completes.
+Your container will be live at `https://<container-name>.<org>.containers.tinfoil.dev` once the deployment completes.
 
 For a fully working example, see [tinfoil-containers-hello-world](https://github.com/tinfoilsh/tinfoil-containers-hello-world).
 
