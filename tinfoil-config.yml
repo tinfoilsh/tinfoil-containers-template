@@ -9,7 +9,6 @@
 #
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
-shim-version: v0.4.2@sha256:d65f769e37bbe86ffaeef42120c29c4b9de33415fcd7588a9ef7a64f609aa2a3
 cvm-version: 0.7.1
 cpus: 2
 memory: 8192
@@ -27,7 +26,6 @@ containers:
 
 # Shim configuration (adjust upstream-port and paths to match your container)
 shim:
-  listen-port: 443
   upstream-port: 8000
   paths:
     - /health
