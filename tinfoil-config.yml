@@ -9,7 +9,7 @@
 #
 # For updates: edit this file, commit, and push a new tag (e.g., v2)
 
-cvm-version: 0.7.1
+cvm-version: 0.7.3
 cpus: 2
 memory: 8192
 
