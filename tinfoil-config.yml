@@ -14,10 +14,7 @@ cpus: 2
 memory: 8192
 
 # Container configuration
-# Note: image must include SHA256 hash (e.g., image:tag@sha256:abc123...).
-# Push at least one immutable tag to the registry alongside the digest
-# (a version like v1.2.3 or a commit SHA). Pinning behind only :latest will
-# break: registries garbage-collect orphaned digests after :latest moves.
+# Note: image must include a SHA256 digest, and have at least one immutable tag on ghcr.io (not just :latest).
 containers:
   - name: "app"
     image: "your-image:tag@sha256:..."
