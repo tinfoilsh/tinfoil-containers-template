@@ -1,6 +1,6 @@
 # Tinfoil Container Configuration
 # For updates: edit this file, commit, run the workflow (e.g., v0.0.2)
-cvm-version: 0.10.8
+cvm-version: 0.14.7
 cpus: 2
 memory: 8192
 
