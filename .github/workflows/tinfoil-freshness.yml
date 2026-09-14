@@ -1,0 +1,27 @@
+name: Tinfoil freshness
+run-name: Tinfoil freshness for ${{ inputs.tag }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to witness."
+        required: true
+        type: string
+      digest:
+        description: "Release artifact SHA-256 digest."
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  witness:
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    uses: tinfoilsh/freshness-witness/.github/workflows/private.yml@main
+    with:
+      tag: ${{ inputs.tag }}
+      digest: ${{ inputs.digest }}
