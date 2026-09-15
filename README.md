@@ -2,7 +2,7 @@
 
 A GitHub template repository for deploying a pre-built Docker image as a [Tinfoil Container](https://docs.tinfoil.sh/containers/overview) (in a secure enclave)
 
-Out of the box, this template deploys [`tinfoil-containers-hello-world`](https://github.com/tinfoilsh/tinfoil-containers-hello-world): a tiny HTTP server that reads a `MESSAGE` env var and a `GREETING_TOKEN` secret, and responds with both.
+Out of the box, this template deploys [`tinfoil-containers-hello-world`](https://github.com/tinfoilsh/examples/tree/main/tinfoil-containers-hello-world): a tiny HTTP server that reads a `MESSAGE` env var and a `GREETING_TOKEN` secret, and responds with both.
 
 ## Deploy It
 
@@ -23,7 +23,7 @@ GREETING_TOKEN: <present if secret exists>
 ## Use your own image
 
 1. If you have a prebuilt image, edit `tinfoil-config.yml` to point at the image you want to deploy: change `image:` to your `<repo>@sha256:<digest>`, adjust `env`/`secrets`/`shim` for your container, then release a new version.
-2. If you have your own code in a private repo, [`tinfoil-containers-hello-world`](https://github.com/tinfoilsh/tinfoil-containers-hello-world) shows the build-and-publish side and can be added to an existing repository.
+2. If you have your own code in a private repo, [`tinfoil-containers-hello-world`](https://github.com/tinfoilsh/examples/tree/main/tinfoil-containers-hello-world) shows the build-and-publish side and can be added to an existing repository. Copy the example directory and the repository-root [release workflow](https://github.com/tinfoilsh/examples/blob/main/.github/workflows/release-hello-world.yml); adjust the workflow's build context if you change the directory layout.
 3. If you have your own code in a public repo, use the simple [`tinfoil-public-containers-template`](https://github.com/tinfoilsh/tinfoil-public-containers-template) for an all-in-one-repo example. Since the `tinfoil-config.yml` has to be public, public app code can live in the same repo as the config.
 
 ## Updating
