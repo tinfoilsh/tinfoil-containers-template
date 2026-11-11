@@ -7,13 +7,22 @@ Out of the box, this template deploys [`tinfoil-containers-hello-world`](https:/
 ## Deploy It
 
 1. Click **[Use this template](https://github.com/tinfoilsh/tinfoil-containers-template/generate)** → **Create a new repository**
-2. In the [Tinfoil Dashboard](https://dash.tinfoil.sh), open the **Secrets** tab and add `GREETING_TOKEN` with any value
+2. In the [Tinfoil Dashboard](https://dash.tinfoil.sh), open **Containers** → **Secrets** and add `GREETING_TOKEN` with any value
 3. Release a version by running the **Tinfoil Release** workflow:
    - **CLI:** `gh workflow run tinfoil-release.yml -f version=v0.0.1`
    - **UI:** **Actions** tab → **Tinfoil Release** → **Run workflow**, then enter the version
-4. **Containers** → **Deploy**, select your repo and tag, and click **Deploy**
+4. Once the release is published, open **Containers** → **Instances**, choose **New instance**, select your repo and tag, and choose **Create instance**
 
-Once running, `curl https://<container-name>.<org>.containers.tinfoil.dev` returns:
+Once it is running, send a verified request with the [Tinfoil CLI](https://github.com/tinfoilsh/tinfoil-cli), using your instance's domain and your repo:
+
+```bash
+tinfoil http get \
+  -e <container-name>.<org>.containers.tinfoil.dev \
+  -r <owner>/<repo>@v0.0.1 \
+  https://<container-name>.<org>.containers.tinfoil.dev/
+```
+
+It returns:
 
 ```
 MESSAGE: <value from tinfoil-config.yml>
